@@ -40,7 +40,10 @@ gulp.task('build-dev', ['clean', 'copy'], () => {
     .pipe(sourcemaps.init())
     .pipe(tsconfig());
   return tsResult.js
-    .pipe(sourcemaps.write('./'))
+    .pipe(sourcemaps.mapSources(function(sourcePath, file) {
+      return '../../src/' + sourcePath;
+    }))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'))
     .pipe(shell([ 'cp env/dev.template.env env/.env' ]));
 });
