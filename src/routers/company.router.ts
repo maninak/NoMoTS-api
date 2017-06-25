@@ -12,7 +12,7 @@ const MONGO_LINK: string      = `mongodb://${MONGO_URL}:${MONGO_PORT}/${MONGO_DB
 const MONGO_CONNECTION: mongoose.Connection = mongoose.createConnection(MONGO_LINK);
 
 // this is what we will use to query mongo regarding Company documents
-const COMPANY_MODEL: mongoose.Model<ICompanyModel> = MONGO_CONNECTION.model<ICompanyModel>('Company', CompanySchema);
+const MONGO_COMPANY: mongoose.Model<ICompanyModel> = MONGO_CONNECTION.model<ICompanyModel>('Company', CompanySchema);
 
 
 export class CompanyRouter {
@@ -34,7 +34,7 @@ export class CompanyRouter {
    * GET all Companies
    */
   async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
-    let foundCompanies: ICompanyModel[] = await COMPANY_MODEL.find();
+    let foundCompanies: ICompanyModel[] = await MONGO_COMPANY.find();
     res.send(foundCompanies);
   }
 
@@ -50,27 +50,54 @@ export class CompanyRouter {
         status: res.status,
       });
     }
-    let foundCompany: ICompanyModel = await COMPANY_MODEL.findById(queryId);
+    let foundCompany: ICompanyModel = await MONGO_COMPANY.findById(queryId);
     res.send(foundCompany);
   }
 
   /**
-   * PUT a new Company to the DB
+   * Create and store a new Company in the DB
    */
-  // async putOne(req: Request, res: Response, next: NextFunction): Promise<void> {
-  //   let newCompany: ICompany = {
-  //     email: req.headers['email'],
-  //     firstname: req.headers['firstname'],
-  //     lastname: req.headers['lastname'],
-  //   };
-  //   try {
-  //     let value: ICompanyModel = await COMPANY_MODEL.create(newCompany);
-  //     res.send(value);
-  //   }
-  //   catch (error) {
-  //     res.status(406).send(error.message); // NOT ACCEPTABLE, client is missing proper header fields
-  //   }
-  // }
+  async create(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      // ensure all required fields are present
+      if (
+          req.body.name     === undefined ||
+          req.body.address  === undefined ||
+          req.body.city     === undefined ||
+          req.body.country  === undefined
+        ) {
+        throw new TypeError();
+      }
+
+      // create new ICompany object with the supplied required fields
+      let newCompany: ICompany = {
+        name          : req.body['name'].trim(),
+        address       : req.body['address'].trim(),
+        city          : req.body['city'].trim(),
+        country       : req.body['country'].trim(),
+      };
+
+      // set optional fields if supplied
+      newCompany.email = req.body['email'] ? req.body['email'].trim() : undefined ;
+      newCompany.phone = req.body['phone'] ? req.body['phone'].trim() : undefined ;
+      newCompany.benef_owners = req.body['benef_owners'] ? req.body['benef_owners'] : undefined ;
+
+      let response: ICompanyModel = await MONGO_COMPANY.create(newCompany);
+      res.status(201).send(response); // 201 CREATED
+    }
+    catch (error) {
+      // only print detailed error message in development mode, for security reasons
+      let prodSafeError: string = 'Company validation failed. Proper body fields are missing.';
+      switch (process.env.NODE_ENV) {
+        case 'production':
+          res.status(406).send(prodSafeError); // 406 NOT ACCEPTABLE
+        case 'development':
+          res.status(406).send(error.message); // 406 NOT ACCEPTABLE
+        default:
+          res.status(406).send(new Error(prodSafeError)); // 406 NOT ACCEPTABLE
+      }
+    }
+  }
 
   /**
    * Take each handler and attach it to one of the Express.Router's endpoints
@@ -78,6 +105,6 @@ export class CompanyRouter {
   private initRoutes(): void {
     this.router.get('/', this.getAll);
     this.router.get('/:id', this.getOne);
-    // this.router.put('/create', this.putOne);
+    this.router.post('/create', this.create);
   };
 }
