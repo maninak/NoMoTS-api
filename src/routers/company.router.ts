@@ -15,7 +15,7 @@ const MONGO_CONNECTION: mongoose.Connection = mongoose.createConnection(MONGO_LI
 const MONGO_COMPANY: mongoose.Model<ICompanyModel> = MONGO_CONNECTION.model<ICompanyModel>('Company', CompanySchema);
 
 /**
- * An API router that implements all CRUD functions on ICompany objects
+ * An API router that implements all CRUD functions on ICompany objects.
  * @exports CompanyRouter
  */
 export class CompanyRouter {
@@ -27,14 +27,14 @@ export class CompanyRouter {
   }
 
   /**
-   * Creates and returns a new, ready-to-use, configured express Router
+   * Creates and returns a new, ready-to-use, configured express Router.
    */
   static bootstrap(): Router {
     return new CompanyRouter().router;
   }
 
   /**
-   * RETRIEVE all Companies and respond with their id and name
+   * RETRIEVE all Company documents existing in the DB and respond with their id and name.
    */
   async retrieveAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     let foundCompanies: ICompanyModel[] = await MONGO_COMPANY.find().select({
@@ -45,7 +45,7 @@ export class CompanyRouter {
   }
 
   /**
-   * RETRIEVE a single Company document using the supplied id
+   * RETRIEVE a single Company document using the supplied id.
    */
   async retrieveById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
@@ -65,7 +65,7 @@ export class CompanyRouter {
   }
 
   /**
-   * Create and store a new Company in the DB
+   * Create and store a new Company document in the DB.
    */
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
@@ -101,7 +101,7 @@ export class CompanyRouter {
   }
 
   /**
-   * Take each handler and attach it to one of the Express.Router's endpoints
+   * Take each handler and attach it to one of the Express.Router's endpoints.
    */
   private initRoutes(): void {
     this.router.get('/', this.retrieveAll);
