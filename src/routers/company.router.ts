@@ -14,7 +14,10 @@ const MONGO_CONNECTION: mongoose.Connection = mongoose.createConnection(MONGO_LI
 // this is what we will use to query mongo regarding Company documents
 const MONGO_COMPANY: mongoose.Model<ICompanyModel> = MONGO_CONNECTION.model<ICompanyModel>('Company', CompanySchema);
 
-
+/**
+ * An API router that implements all CRUD functions on ICompany objects
+ * @exports CompanyRouter
+ */
 export class CompanyRouter {
   router: Router;
 
