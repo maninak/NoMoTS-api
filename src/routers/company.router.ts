@@ -34,6 +34,18 @@ export class CompanyRouter {
   }
 
   /**
+   * Attach each handler to one of the Express.Router's endpoints.
+   */
+  initRoutes(): void {
+    this.router.get('/', this.retrieveAll);
+    this.router.get('/:id', this.retrieveById);
+    this.router.put('/:id', this.updateById);
+    this.router.patch('/:id', this.updateBeneficiariesById);
+    this.router.delete('/:id', this.deleteById);
+    this.router.post('/create', this.create);
+  };
+
+  /**
    * RETRIEVE all Company documents existing in the DB and respond with their id and name.
    */
   async retrieveAll(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -61,42 +73,6 @@ export class CompanyRouter {
     }
     catch (error) {
       res.status(404).send({ 'error': error.message }); // 404 NOT FOUND
-    }
-  }
-
-  /**
-   * Create and store a new Company document in the DB.
-   */
-  async create(req: Request, res: Response, next: NextFunction): Promise<void> {
-    try {
-      // ensure all required fields are present in the request
-      if (
-          req.body.name     === undefined ||
-          req.body.address  === undefined ||
-          req.body.city     === undefined ||
-          req.body.country  === undefined
-        ) {
-        throw new TypeError('Request data validation failed. Required body fields are missing.');
-      }
-
-      // create new ICompany object with the supplied required fields
-      let newCompany: ICompany = {
-        name          : req.body['name'].trim(),
-        address       : req.body['address'].trim(),
-        city          : req.body['city'].trim(),
-        country       : req.body['country'].trim(),
-      };
-
-      // set optional fields if supplied
-      newCompany.email = req.body['email'] ? req.body['email'].trim() : undefined;
-      newCompany.phone = req.body['phone'] ? req.body['phone'].trim() : undefined;
-      newCompany.benef_owners = req.body['benef_owners'] ? req.body['benef_owners'] : undefined;
-
-      let createdCompany: ICompanyModel = await MONGO_COMPANY.create(newCompany);
-      res.status(201).send({ 'response' : createdCompany }); // 201 CREATED
-    }
-    catch (error) {
-      res.status(406).send({ 'error': error.message }); // 406 NOT ACCEPTABLE
     }
   }
 
@@ -190,14 +166,38 @@ export class CompanyRouter {
   }
 
   /**
-   * Take each handler and attach it to one of the Express.Router's endpoints.
+   * Create and store a new Company document in the DB.
    */
-  private initRoutes(): void {
-    this.router.get('/', this.retrieveAll);
-    this.router.get('/:id', this.retrieveById);
-    this.router.put('/:id', this.updateById);
-    this.router.patch('/:id', this.updateBeneficiariesById);
-    this.router.delete('/:id', this.deleteById);
-    this.router.post('/create', this.create);
-  };
+  async create(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      // ensure all required fields are present in the request
+      if (
+          req.body.name     === undefined ||
+          req.body.address  === undefined ||
+          req.body.city     === undefined ||
+          req.body.country  === undefined
+        ) {
+        throw new TypeError('Request data validation failed. Required body fields are missing.');
+      }
+
+      // create new ICompany object with the supplied required fields
+      let newCompany: ICompany = {
+        name          : req.body['name'].trim(),
+        address       : req.body['address'].trim(),
+        city          : req.body['city'].trim(),
+        country       : req.body['country'].trim(),
+      };
+
+      // set optional fields if supplied
+      newCompany.email = req.body['email'] ? req.body['email'].trim() : undefined;
+      newCompany.phone = req.body['phone'] ? req.body['phone'].trim() : undefined;
+      newCompany.benef_owners = req.body['benef_owners'] ? req.body['benef_owners'] : undefined;
+
+      let createdCompany: ICompanyModel = await MONGO_COMPANY.create(newCompany);
+      res.status(201).send({ 'response' : createdCompany }); // 201 CREATED
+    }
+    catch (error) {
+      res.status(406).send({ 'error': error.message }); // 406 NOT ACCEPTABLE
+    }
+  }
 }
