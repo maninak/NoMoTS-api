@@ -16,7 +16,6 @@ import { ICompanyModel } from './company.schema';
  * This interface definition must be (manually) kept in sync with CompanySchema.
  */
 export interface ICompany {
-  company_id    : string;
   name          : string;
   address       : string;
   city          : string;
@@ -46,7 +45,6 @@ export interface ICompanyModel extends ICompany, Document {
  * Defines a Company schema which is used by mongoose to access Company documents via mongoDB.
  */
 export const CompanySchema: Schema = new Schema({
-  company_id    : { type: String, required: true },
   name          : { type: String, required: true },
   address       : { type: String, required: true },
   city          : { type: String, required: true },

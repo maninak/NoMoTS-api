@@ -7,15 +7,16 @@ import * as http from 'http';
 import { API } from './API';
 
 
-// Setup debug logger on namespace 'prn-webserver'
-// prints out to console via log stream when launched with `DEBUG=prn-webserver node index.js`
-const log: debug.IDebug = debug('prn-webserver:log').log = console.log.bind(console);
+// Setup debug logger on namespace 'webserver'
+// prints out to console via log stream when launched with `DEBUG=webserver node server.js`
+const log: debug.IDebug = debug('webserver:log').log = console.log.bind(console);
 
 // Load environment variables if present
 if (fs.existsSync('env/.env')) {
   dotenv.config({ path: 'env/.env' });
-  console.log('Success loading environment variables.');
+  console.log(`Success loading environment variables. Running in mode: '${process.env.NODE_ENV}'`);
 } else {
+  // fall back to development mode if no environment variables are present
   process.env.NODE_ENV = 'development';
   console.warn('Warning: Failed loading environment variables because expected file "env/.env" was not found. '
       + 'Using fallback development configuration instead.');
