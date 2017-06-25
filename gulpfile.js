@@ -91,7 +91,7 @@ gulp.task('demon', () => {
     script: 'dist/src/server.js',
     watch: 'dist/**/*',
     ext: 'js',
-    env: { DEBUG: 'prn-*' },
+    env: { DEBUG: '' }, // set DEBUG: '*' to enable verbose mode
     delay: 100
   });
 });
