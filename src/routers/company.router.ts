@@ -69,7 +69,7 @@ export class CompanyRouter {
    */
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      // ensure all required fields are present in th e request
+      // ensure all required fields are present in the request
       if (
           req.body.name     === undefined ||
           req.body.address  === undefined ||
@@ -88,12 +88,52 @@ export class CompanyRouter {
       };
 
       // set optional fields if supplied
-      newCompany.email = req.body['email'] ? req.body['email'].trim() : undefined ;
-      newCompany.phone = req.body['phone'] ? req.body['phone'].trim() : undefined ;
-      newCompany.benef_owners = req.body['benef_owners'] ? req.body['benef_owners'] : undefined ;
+      newCompany.email = req.body['email'] ? req.body['email'].trim() : undefined;
+      newCompany.phone = req.body['phone'] ? req.body['phone'].trim() : undefined;
+      newCompany.benef_owners = req.body['benef_owners'] ? req.body['benef_owners'] : undefined;
 
-      let response: ICompanyModel = await MONGO_COMPANY.create(newCompany);
-      res.status(201).send({ 'response' : response }); // 201 CREATED
+      let createdCompany: ICompanyModel = await MONGO_COMPANY.create(newCompany);
+      res.status(201).send({ 'response' : createdCompany }); // 201 CREATED
+    }
+    catch (error) {
+      res.status(406).send({ 'error': error.message }); // 406 NOT ACCEPTABLE
+    }
+  }
+
+  /**
+   * UPDATE a Company document already existing in the DB.
+   */
+  async updateById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      // ensure all required fields are present in the request
+      if (
+          req.body.name     === undefined ||
+          req.body.address  === undefined ||
+          req.body.city     === undefined ||
+          req.body.country  === undefined
+        ) {
+        throw new TypeError('Company validation failed. Required body fields are missing.');
+      }
+
+      let queryId: string = req.params.id;
+      if (mongoose.Types.ObjectId.isValid(queryId) !== true) {
+        throw new Error(`Supplied Company id '${queryId}' is not a valid MongoDB identifier.`);
+      }
+
+      let updatedCompany: ICompanyModel = await MONGO_COMPANY.findByIdAndUpdate(queryId, { $set: {
+        name          : req.body['name'].trim(),
+        address       : req.body['address'].trim(),
+        city          : req.body['city'].trim(),
+        country       : req.body['country'].trim(),
+        email         : req.body['email'] ? req.body['email'].trim() : undefined,
+        phone         : req.body['phone'] ? req.body['phone'].trim() : undefined,
+        benef_owners  : req.body['benef_owners'] ? req.body['benef_owners'] : undefined,
+      }}, { new: true });
+
+      if (!updatedCompany) {
+        throw new Error(`No existing item found with supplied id '${queryId}'.`);
+      }
+      res.status(201).send({ 'response' : updatedCompany }); // 201 CREATED
     }
     catch (error) {
       res.status(406).send({ 'error': error.message }); // 406 NOT ACCEPTABLE
@@ -106,6 +146,7 @@ export class CompanyRouter {
   private initRoutes(): void {
     this.router.get('/', this.retrieveAll);
     this.router.get('/:id', this.retrieveById);
+    this.router.put('/:id', this.updateById);
     this.router.post('/create', this.create);
   };
 }
