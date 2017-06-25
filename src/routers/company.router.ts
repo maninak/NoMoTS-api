@@ -31,30 +31,34 @@ export class CompanyRouter {
   }
 
   /**
-   * RETRIEVE all Companies
+   * RETRIEVE all Companies and respond with their id and name
    */
   async retrieveAll(req: Request, res: Response, next: NextFunction): Promise<void> {
     let foundCompanies: ICompanyModel[] = await MONGO_COMPANY.find().select({
         _id: 1,
         name: 1,
     });
-    res.send(foundCompanies);
+    res.status(200).send({ 'response' : foundCompanies });
   }
 
   /**
-   * GET one Company by id
+   * RETRIEVE a single Company document using the supplied id
    */
-  async getOne(req: Request, res: Response, next: NextFunction): Promise<void> {
-    let queryId: string = req.params.id;
-    if (mongoose.Types.ObjectId.isValid(queryId) !== true) {
-      res.status(400).send({
-        error: 'Invalid Company id',
-        requested: queryId,
-        status: res.status,
-      });
+  async retrieveById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      let queryId: string = req.params.id;
+      if (mongoose.Types.ObjectId.isValid(queryId) !== true) {
+        throw new Error(`Supplied Company id '${queryId}' is not a valid MongoDB identifier.`);
+      }
+      let foundCompany: ICompanyModel = await MONGO_COMPANY.findById(queryId);
+      if (!foundCompany) {
+        throw new Error(`No existing item found with supplied id '${queryId}'.`);
+      }
+      res.status(200).send({ 'response' : foundCompany }); // 200 SUCCESS
     }
-    let foundCompany: ICompanyModel = await MONGO_COMPANY.findById(queryId);
-    res.send(foundCompany);
+    catch (error) {
+      res.status(404).send({ 'error': error.message }); // 404 NOT FOUND
+    }
   }
 
   /**
@@ -62,14 +66,14 @@ export class CompanyRouter {
    */
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      // ensure all required fields are present
+      // ensure all required fields are present in th e request
       if (
           req.body.name     === undefined ||
           req.body.address  === undefined ||
           req.body.city     === undefined ||
           req.body.country  === undefined
         ) {
-        throw new TypeError();
+        throw new TypeError('Company validation failed. Proper body fields are missing.');
       }
 
       // create new ICompany object with the supplied required fields
@@ -86,19 +90,10 @@ export class CompanyRouter {
       newCompany.benef_owners = req.body['benef_owners'] ? req.body['benef_owners'] : undefined ;
 
       let response: ICompanyModel = await MONGO_COMPANY.create(newCompany);
-      res.status(201).send(response); // 201 CREATED
+      res.status(201).send({ 'response' : response }); // 201 CREATED
     }
     catch (error) {
-      // only print detailed error message in development mode, for security reasons
-      let prodSafeError: string = 'Company validation failed. Proper body fields are missing.';
-      switch (process.env.NODE_ENV) {
-        case 'production':
-          res.status(406).send(prodSafeError); // 406 NOT ACCEPTABLE
-        case 'development':
-          res.status(406).send(error.message); // 406 NOT ACCEPTABLE
-        default:
-          res.status(406).send(new Error(prodSafeError)); // 406 NOT ACCEPTABLE
-      }
+      res.status(406).send({ 'error': error.message }); // 406 NOT ACCEPTABLE
     }
   }
 
@@ -107,7 +102,7 @@ export class CompanyRouter {
    */
   private initRoutes(): void {
     this.router.get('/', this.retrieveAll);
-    this.router.get('/:id', this.getOne);
+    this.router.get('/:id', this.retrieveById);
     this.router.post('/create', this.create);
   };
 }
