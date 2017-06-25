@@ -3,12 +3,16 @@
 ## Table of Contents
 - [Description](#description)
     - [Technologies](#technologies)
-- [Dependencies](#dependencies)
-- [Deploy](#deploy)
-- [Develop](#develop)
-    - [Contribution](#contribution)
-    - [Launch Scripts](#launch-scripts)
+- [Getting Started](#getting-started)
+    - [Dependencies](#dependencies)
+    - [Deploy](#deploy)
+    - [Develop](#develop)
+    - [NPM Scripts](#npm-scripts)
     - [Environment](#environment)
+    - [Contributing](#contributing)
+        - [Commit Guidelines](#commit-guidelines)
+        - [Git Flow](#git-flow)
+        - [Release Versioning](#release-versioning)
     - [Helpful Resources](#helpful-resources)
 
 ----------
@@ -21,9 +25,11 @@ NoMoTS provides the rich custom tooling needed for node + Typescript development
 
 ### Technologies
 
-This is a [Node.js](https://nodejs.org/) project written in [Typescript](http://www.typescriptlang.org/) and built with the help of [gulp](http://gulpjs.com/). The API is served by an [Express](http://expressjs.com/) web server and is designed to connect to a [MongoDB](https://www.mongodb.com/) database (see [_#Environment_](#environment) for more). The database schema validation and connection with the database is achieved with [mongoose](http://mongoosejs.com/). Project tests are run by [Mocha](https://mochajs.org/) against the [Chai](http://chaijs.com/) assertion library.
+This is a [Node.js](https://nodejs.org/) project written in [Typescript](http://www.typescriptlang.org/) and built with the help of [gulp](http://gulpjs.com/). The API is served by an [Express](http://expressjs.com/) web server and is designed to connect to a [MongoDB](https://www.mongodb.com/) database (see section [Environment](#environment) for more). The database schema validation and connection with the database is achieved with [mongoose](http://mongoosejs.com/). Project tests are run by [Mocha](https://mochajs.org/) against the [Chai](http://chaijs.com/) assertion library.
 
-# Dependencies
+# Getting Started
+
+## Dependencies
 
 In order to launch NoMoTS API for production or development the following software need to be installed on the machine:
 
@@ -77,9 +83,34 @@ This will create and use a ephemeral `mongo-test` folder at the project's root d
 
 This will launch the API web server using [nodemon](https://nodemon.io/) instead of node and will automatically restart the API upon each source code change (practically every time `npm run watch` recompiles any changed .ts files).
 
-### Contributing
+## NPM Scripts
+The file `package.json` found in root directory contains many useful scripts which can be executed from the terminal with the format `npm run <script_name>`.
 
-#### Commit Guidelines
+Here is a brief description of what each does:
+
+* **`postinstall`** is called automatically upon each `npm install` command and is hooked to a custom script. This script is useful to enforce repository state that all other tools cannot (e.g. install git hooks, apply simple edits on dependencies' source code using sed etc).,
+* **`localmongo`** see section [Terminal 2](#terminal-2)
+* **`start`** launches the API web server (must have been built first)
+* **`demon`** see section [Terminal 3](#terminal-3)
+* **`watch`** see (6) in section [Terminal 1](#terminal-1)
+* **`build`** builds a production version of the app from source into `dist` folder. Also sets productions environment variables using the template `prod.template.env` found in the `env` folder.
+* **`build-dev`** builds a development version of the app from source into `dist` folder, including javascript source maps. Also sets development environment variables using the template `dev.template.env` found in the `env` folder.
+* **`release`** see section [Release Versioning](#release-versioning)
+* **`clean`** deletes `dist` folder
+* **`clean:node`** deletes `node_modules` folder (`rm -rf` is dangerous, stay safe)
+* **`clean:purge`** deletes everything that isn't tracked by git or is ignored by git (useful to fall back to git clone state)
+
+## Environment
+
+Upon launch, NoMoTS API looks for the file `.env` inside the `env/` folder from which it loads any specified environment variables. If no file is found, then the application falls back to using hardcoded development values. There is also a suggested production configuration template found in `env/prod.template.env`.
+
+Contrary to the template files, the `env/.env` file (if you create one) is *NOT* version-controlled.
+
+ **NOTE:** *Never* store private secrets such as API keys, tokens, passwords etc in the `*.template.env` files! Always store such data in gitignored files for security concerns!
+
+## Contributing
+
+### Commit Guidelines
 
 We hold very precise rules over how our git commit messages can be formatted.  This leads to **more readable messages** that are easy to follow when looking through the **project history**.  But also, we use the git commit messages to **automatically generate the change log**.
 
@@ -91,7 +122,7 @@ To disable the commit message linter:
 1. Delete the `"postinstall"` script from inside your `package.json`
 2. Delete the file `commit-msg` located at `NoMoTS-api/.git/hooks`
 
-##### Commit Message Convention, at a Glance
+#### Commit Message Convention, at a Glance
 
 _patches:_
 
@@ -120,13 +151,13 @@ You decide, e.g., docs, chore, etc.
 git commit -a -m "docs: fixed up the docs a bit"
 ```
 
-#### Git Flow
+### Git Flow
 
 We use [git flow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) (with default settings) to create feature, bugfix, etc branches.
 
 Git flow can be practiced manually, but to make your life easy it's best to use automated tools that support it like [GitKraken](https://www.gitkraken.com/) or a [command-line tool](https://github.com/nvie/gitflow/wiki/Installation).
 
-#### Release Versioning
+### Release Versioning
 
 Because of the fact that git commit messages are structured, versioning is done automatically using [`conventional-changelog`](https://github.com/conventional-changelog/conventional-changelog). 
 
@@ -134,31 +165,6 @@ Running `npm run release` in your terminal will get the latest available develop
 
 If you feel it is needed feel free to make corrections/additions by amending the master commit. If everything looks good, push the master branch upstream with the command
 `git checkout master && git push --follow-tags origin master`
-
-## Launch Scripts
-The file `package.json` found in root directory contains many useful scripts which can be executed from the terminal with the format `npm run <script_name>`.
-
-Here is a brief description of what each does:
-
-* **`postinstall`** is called automatically upon each `npm install` command and is hooked to a custom script. This script is useful to enforce repository state that all other tools cannot (e.g. install git hooks, apply simple edits on dependencies' source code using sed etc).,
-* **`localmongo`** see section [Terminal 2](#terminal-2)
-* **`start`** launches the API web server (must have been built first)
-* **`demon`** see section [Terminal 3](#terminal-3)
-* **`watch`** see (6) in section [Terminal 1](#terminal-1)
-* **`build`** builds a production version of the app from source into `dist` folder. Also sets productions environment variables using the template `prod.template.env` found in the `env` folder.
-* **`build-dev`** builds a development version of the app from source into `dist` folder, including javascript source maps. Also sets development environment variables using the template `dev.template.env` found in the `env` folder.
-* **`release`** see section [Release Versioning](#release-versioning)
-* **`clean`** deletes `dist` folder
-* **`clean:node`** deletes `node_modules` folder (`rm -rf` is dangerous, stay safe)
-* **`clean:purge`** deletes everything that isn't tracked by git or is ignored by git (useful to fall back to git clone state)
-
-## Environment
-
-Upon launch, NoMoTS API looks for the file `.env` inside the `env/` folder from which it loads environment variables. If no file is found, then the application falls back to using hardcoded development values (same as in template file `env/dev.template.env`). There is also a suggested production configuration template found in `env/prod.template.env`.
-
-Contrary to the template files, the `env/.env` file (if you create one) is *NOT* version-controlled.
-
-> **NOTE:** *Never* store private secrets such as API keys, tokens, passwords etc in the `*.template.env` files! Always store such data in gitignored files for security concerns!
 
 ## Helpful Resources
 
