@@ -76,7 +76,7 @@ export class CompanyRouter {
           req.body.city     === undefined ||
           req.body.country  === undefined
         ) {
-        throw new TypeError('Company validation failed. Proper body fields are missing.');
+        throw new TypeError('Company validation failed. Required body fields are missing.');
       }
 
       // create new ICompany object with the supplied required fields
