@@ -44,7 +44,7 @@ In order to launch NoMoTS API for production or development the following softwa
 
 To deploy in production copy and paste the following single command in your Unix terminal:
 
-`git clone git@github.com:maninak/NoMoTS-api.git && cd NoMoTS-api && npm i --only=production && npm build && npm start`
+$ `git clone git@github.com:maninak/NoMoTS-api.git && cd NoMoTS-api && npm i --only=production && npm build && npm start`
 
 This will:
 1. clone the source code
@@ -59,7 +59,7 @@ You can get set-up for development and extend the boilerplate by copy-pasting th
 
 #### Terminal 1:
 
-`git clone git@github.com:maninak/NoMoTS-api.git && cd NoMoTS-api && npm i && npm run watch`
+$ `git clone git@github.com:maninak/NoMoTS-api.git && cd NoMoTS-api && npm i && npm run watch`
 
 This will:
 1. clone the source code
@@ -75,13 +75,13 @@ This will:
 
 #### Terminal  2: 
 
-`npm run localmongo`
+$ `npm run localmongo`
 
 This will create and use a ephemeral `mongo-test` folder at the project's root directory and then launch a `mongod` mongoDB demon that uses this folder as its `db` directory. This folder is *NOT* version-controlled.
 
 #### Terminal 3:
 
-`npm run demon`
+$ `npm run demon`
 
 This will launch the API web server using [nodemon](https://nodemon.io/) instead of node and will automatically restart the API upon each source code change (practically every time `npm run watch` recompiles any changed .ts files).
 
@@ -96,7 +96,8 @@ Here is a brief description of what each does:
 * **`demon`** see section [Terminal 3](#terminal-3)
 * **`watch`** see (6) in section [Terminal 1](#terminal-1)
 * **`build`** builds a production version of the app from source into `dist` folder. Also sets productions environment variables using the template `prod.template.env` found in the `env` folder.
-* **`build-dev`** builds a development version of the app from source into `dist` folder, including javascript source maps. Also sets development environment variables using the template `dev.template.env` found in the `env` folder.
+* **`build:dev`** builds a development version of the app from source into `dist` folder, including javascript source maps. Also sets development environment variables using the template `dev.template.env` found in the `env` folder.
+* **`test`** runs all test present in the `test` folder
 * **`release`** see section [Release Versioning](#release-versioning)
 * **`clean`** deletes `dist` folder
 * **`clean:node`** deletes `node_modules` folder (`rm -rf` is dangerous, stay safe)
@@ -129,19 +130,19 @@ To disable the commit message linter:
 _patches:_
 
 ```sh
-git commit -a -m "fix(parsing): fix a bug in the parser"
+$ git commit -a -m "fix(parsing): fix a bug in the parser"
 ```
 
 _features:_
 
 ```sh
-git commit -a -m "feat(parser): implement new parser \o/"
+$ git commit -a -m "feat(parser): implement new parser \o/"
 ```
 
 _breaking changes:_
 
 ```sh
-git commit -a -m "feat(new-parser): introduce a new parsing library
+$ git commit -a -m "feat(new-parser): introduce a new parsing library
 BREAKING CHANGE: new library does not support foo-construct"
 ```
 
@@ -150,7 +151,7 @@ _other changes:_
 You decide, e.g., docs, chore, etc.
 
 ```sh
-git commit -a -m "docs: fixed up the docs a bit"
+$ git commit -a -m "docs: fixed up the docs a bit"
 ```
 
 ### Git Flow
