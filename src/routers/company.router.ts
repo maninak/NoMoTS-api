@@ -31,10 +31,13 @@ export class CompanyRouter {
   }
 
   /**
-   * GET all Companies
+   * RETRIEVE all Companies
    */
-  async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
-    let foundCompanies: ICompanyModel[] = await MONGO_COMPANY.find();
+  async retrieveAll(req: Request, res: Response, next: NextFunction): Promise<void> {
+    let foundCompanies: ICompanyModel[] = await MONGO_COMPANY.find().select({
+        _id: 1,
+        name: 1,
+    });
     res.send(foundCompanies);
   }
 
@@ -103,7 +106,7 @@ export class CompanyRouter {
    * Take each handler and attach it to one of the Express.Router's endpoints
    */
   private initRoutes(): void {
-    this.router.get('/', this.getAll);
+    this.router.get('/', this.retrieveAll);
     this.router.get('/:id', this.getOne);
     this.router.post('/create', this.create);
   };
