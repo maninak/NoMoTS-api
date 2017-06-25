@@ -170,6 +170,26 @@ export class CompanyRouter {
   }
 
   /**
+   * DELETE a single Company document with the supplied id.
+   */
+  async deleteById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      let queryId: string = req.params.id;
+      if (mongoose.Types.ObjectId.isValid(queryId) !== true) {
+        throw new Error(`Supplied Company id '${queryId}' is not a valid MongoDB identifier.`);
+      }
+      let deletedCompany: ICompanyModel = await MONGO_COMPANY.findByIdAndRemove(queryId);
+      if (!deletedCompany) {
+        throw new Error(`No existing item found with supplied id '${queryId}'.`);
+      }
+      res.status(200).send({ 'response' : deletedCompany }); // 200 SUCCESS
+    }
+    catch (error) {
+      res.status(404).send({ 'error': error.message }); // 404 NOT FOUND
+    }
+  }
+
+  /**
    * Take each handler and attach it to one of the Express.Router's endpoints.
    */
   private initRoutes(): void {
@@ -177,6 +197,7 @@ export class CompanyRouter {
     this.router.get('/:id', this.retrieveById);
     this.router.put('/:id', this.updateById);
     this.router.patch('/:id', this.updateBeneficiariesById);
+    this.router.delete('/:id', this.deleteById);
     this.router.post('/create', this.create);
   };
 }
