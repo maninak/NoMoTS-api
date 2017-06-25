@@ -1,6 +1,6 @@
 {
   "name": "NoMoTS",
-  "description": "A Node API using MongoDB implemented in Typescript",
+  "description": "A Node API boilerplate using MongoDB and implemented in Typescript.",
   "version": "0.1.0",
   "author": "maninak",
   "homepage": "https://github.com/maninak/NoMoTS",
