@@ -17,7 +17,7 @@ if (fs.existsSync('env/.env')) {
   console.log('Success loading environment variables.');
 } else {
   process.env.NODE_ENV = 'development';
-  console.warn('Failed loading environment variables, expected file "env/.env" not found. '
+  console.warn('Warning: Failed loading environment variables because expected file "env/.env" was not found. '
       + 'Using fallback development configuration instead.');
 }
 
@@ -39,7 +39,17 @@ export function normalizePort(val: number|string): number|string|boolean {
 }
 
 /**
- * Event listener for HTTP server 'error' event.
+ * Handle HTTP server 'listening' event.
+ */
+function onListening(): void {
+  let addr: { port: number, family: string, address: string; } = httpServer.address();
+  let bind: string = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
+  log(`Listening on ${bind}`);
+}
+
+/**
+ * Handle HTTP server 'error' event.
+ * @throws NodeJS.ErrnoException If there is no handler implemented to catch the error it is thrown to caller
  */
 function onError(error: NodeJS.ErrnoException): void {
   if (error.syscall !== 'listen') { throw error; }
@@ -57,13 +67,4 @@ function onError(error: NodeJS.ErrnoException): void {
     default:
       throw error;
   }
-}
-
-/**
- * Event listener for HTTP server 'listening' event.
- */
-function onListening(): void {
-  let addr: { port: number, family: string, address: string; } = httpServer.address();
-  let bind: string = (typeof addr === 'string') ? `pipe ${addr}` : `port ${addr.port}`;
-  log(`Listening on ${bind}`);
 }

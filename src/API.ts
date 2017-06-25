@@ -7,7 +7,7 @@ import * as path from 'path';
 import { NextFunction, Request, Response } from 'express';
 import { Server } from 'http';
 
-import { UserRouter } from './routers/user.router';
+import { CompanyRouter } from './routers/company.router';
 
 
 /**
@@ -17,7 +17,7 @@ export class API {
   express: express.Application;
 
   /**
-   * Initialise the express app
+   * Initialize the express app
    */
   constructor() {
     this.express = express();
@@ -26,11 +26,11 @@ export class API {
   }
 
   /**
-   * Creates a new, ready-to-use, configured express application.
+   * Creates a new, configured, ready-to-use express application operating as an API.
    * @class API 
    * @method bootstrap 
    * @static 
-   * @return {Express.Application} Returns the newly created express application. 
+   * @return Express.Application Returns the newly created express application. 
    */
   public static bootstrap(): express.Application {
     return new API().express;
@@ -38,7 +38,7 @@ export class API {
 
 
   /** 
-   * Configures the express web Server.
+   * Configures the express web server.
    * @class API 
    * @method config 
    */
@@ -56,17 +56,16 @@ export class API {
     }
     this.express.use(bodyParser.json());
     this.express.use(bodyParser.urlencoded({ extended: true }));
-    this.express.use(require('compression')({ level: 5 }));
+    this.express.use(require('compression')({ level: 7 }));
   }
 
   /** 
    * Configures the API endpoints. 
    * @class API 
-   * @method bindRouters 
-   * @return void 
+   * @method bindRouters
    */
   private bindRouters(): void {
     // bind additional routers here
-    this.express.use('/users', UserRouter.bootstrap());
+    this.express.use('/companies', CompanyRouter.bootstrap());
   }
 }
