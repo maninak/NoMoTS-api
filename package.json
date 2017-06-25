@@ -8,7 +8,7 @@
   "scripts": {
     "postinstall": "scripts/postinstall.sh",
     "localmongo": "mkdir -p mongo-test && mongod --dbpath mongo-test --port 37017",
-    "start": "node dist/src/index.js",
+    "start": "node dist/src/server.js",
     "demon": "gulp demon",
     "watch": "gulp watch",
     "build:prod": "gulp build",

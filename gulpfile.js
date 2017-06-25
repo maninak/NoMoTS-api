@@ -84,7 +84,7 @@ gulp.task('watch', ['build-dev'], () => {
 
 gulp.task('demon', () => {
   nodemon({
-    script: 'dist/src/index.js',
+    script: 'dist/src/server.js',
     watch: '**/dist/**/*',
     ext: 'js',
     env: { DEBUG: 'prn-*' },
