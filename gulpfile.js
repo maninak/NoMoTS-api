@@ -6,7 +6,8 @@ const gulp        = require('gulp'),
       nodemon     = require('gulp-nodemon'),
       tslint      = require("gulp-tslint"),
       mocha       = require('gulp-mocha'),
-      env         = require('gulp-env');
+      env         = require('gulp-env'),
+      shell       = require('gulp-shell');
 
 
 gulp.task('clean', () => {
@@ -27,8 +28,10 @@ gulp.task('copy', ['clean'], () => {
 gulp.task('build', ['clean', 'copy'], () => {
   const tsconfig = ts.createProject('tsconfig.json');
   const tsResult = tsconfig.src()
-    .pipe(tsconfig());
-  return tsResult.js.pipe(gulp.dest('dist'));
+    .pipe(tsconfig())
+  return tsResult.js
+    .pipe(gulp.dest('dist'))
+    .pipe(shell([ 'cp env/prod.template.env env/.env' ]));
 });
 
 gulp.task('build-dev', ['clean', 'copy'], () => {
@@ -38,7 +41,8 @@ gulp.task('build-dev', ['clean', 'copy'], () => {
     .pipe(tsconfig());
   return tsResult.js
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist'))
+    .pipe(shell([ 'cp env/dev.template.env env/.env' ]));
 });
 
 gulp.task('test', ['build'], () => {
