@@ -1,9 +1,9 @@
 {
-  "name": "plirono-api",
-  "description": "An API and webserver that expose the Plirono database to other applications and the world.",
+  "name": "NoMoTS",
+  "description": "A Node API using MongoDB implemented in Typescript",
   "version": "0.1.0",
-  "author": "Plirono",
-  "homepage": "http://api.plirono.com/",
+  "author": "maninak",
+  "homepage": "https://github.com/maninak/NoMoTS",
   "private": true,
   "scripts": {
     "postinstall": "scripts/postinstall.sh",
@@ -65,7 +65,12 @@
     "typescript": "~2.1.4"
   },
   "keywords": [
-    "plirono",
-    "api"
+    "NoMoTS",
+    "api",
+    "node",
+    "mongodb",
+    "mongoose",
+    "typescript",
+    "maninak"
   ]
 }
