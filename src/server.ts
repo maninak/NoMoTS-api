@@ -7,9 +7,9 @@ import * as http from 'http';
 import { API } from './API';
 
 
-// Setup debug logger on namespace 'prn-webserver'
-// prints out to console via log stream when launched with `DEBUG=prn-webserver node index.js`
-const log: debug.IDebug = debug('prn-webserver:log').log = console.log.bind(console);
+// Setup debug logger on namespace 'webserver'
+// prints out to console via log stream when launched with `DEBUG=webserver node server.js`
+const log: debug.IDebug = debug('webserver:log').log = console.log.bind(console);
 
 // Load environment variables if present
 if (fs.existsSync('env/.env')) {
