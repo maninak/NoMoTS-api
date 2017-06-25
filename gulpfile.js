@@ -89,7 +89,7 @@ gulp.task('watch', ['build-dev'], () => {
 gulp.task('demon', () => {
   nodemon({
     script: 'dist/src/server.js',
-    watch: 'dist/**/*',
+    watch: '**/dist/**/*',
     ext: 'js',
     env: { DEBUG: '' }, // set DEBUG: '*' to enable verbose mode
     delay: 100
