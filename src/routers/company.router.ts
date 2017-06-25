@@ -76,7 +76,7 @@ export class CompanyRouter {
           req.body.city     === undefined ||
           req.body.country  === undefined
         ) {
-        throw new TypeError('Company validation failed. Required body fields are missing.');
+        throw new TypeError('Request data validation failed. Required body fields are missing.');
       }
 
       // create new ICompany object with the supplied required fields
@@ -112,7 +112,7 @@ export class CompanyRouter {
           req.body.city     === undefined ||
           req.body.country  === undefined
         ) {
-        throw new TypeError('Company validation failed. Required body fields are missing.');
+        throw new TypeError('Request data validation failed. Required body fields are missing.');
       }
 
       let queryId: string = req.params.id;
@@ -141,12 +141,42 @@ export class CompanyRouter {
   }
 
   /**
+   * UPDATE the beneficiaries of a Company document already existing in the DB.
+   */
+  async updateBeneficiariesById(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      // ensure all required fields are present in the request
+      if (req.body.benef_owners === undefined) {
+        throw new TypeError('Request data validation failed. Required body fields are missing.');
+      }
+
+      let queryId: string = req.params.id;
+      if (mongoose.Types.ObjectId.isValid(queryId) !== true) {
+        throw new Error(`Supplied Company id '${queryId}' is not a valid MongoDB identifier.`);
+      }
+
+      let updatedCompany: ICompanyModel = await MONGO_COMPANY.findByIdAndUpdate(queryId, { $set: {
+        benef_owners  : req.body['benef_owners'] ? req.body['benef_owners'] : req.body.benef_owners,
+      }}, { new: true });
+
+      if (!updatedCompany) {
+        throw new Error(`No existing item found with supplied id '${queryId}'.`);
+      }
+      res.status(201).send({ 'response' : updatedCompany }); // 201 CREATED
+    }
+    catch (error) {
+      res.status(406).send({ 'error': error.message }); // 406 NOT ACCEPTABLE
+    }
+  }
+
+  /**
    * Take each handler and attach it to one of the Express.Router's endpoints.
    */
   private initRoutes(): void {
     this.router.get('/', this.retrieveAll);
     this.router.get('/:id', this.retrieveById);
     this.router.put('/:id', this.updateById);
+    this.router.patch('/:id', this.updateBeneficiariesById);
     this.router.post('/create', this.create);
   };
 }
