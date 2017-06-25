@@ -7,7 +7,7 @@ import { CompanySchema, ICompany, ICompanyModel } from './../schemas/company.sch
 mongoose.Promise = global.Promise;
 const MONGO_URL: string       = process.env.MONGO_URL   || 'localhost';
 const MONGO_PORT: number      = process.env.MONGO_PORT  || 37017;
-const MONGO_DB: string        = process.env.DB          || 'test';
+const MONGO_DB: string        = process.env.DB          || 'dev';
 const MONGO_LINK: string      = `mongodb://${MONGO_URL}:${MONGO_PORT}/${MONGO_DB}`;
 const MONGO_CONNECTION: mongoose.Connection = mongoose.createConnection(MONGO_LINK);
 
