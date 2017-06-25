@@ -15,7 +15,7 @@ git pull origin master
 git merge --no-ff --no-edit develop
 
 
-# TODO run tests
+# TODO run and ensure tests pass
 
 
 ##### RELEASE:DO #####
@@ -27,9 +27,6 @@ node_modules/standard-version/bin/cli.js -- --standard-version
 
 
 ##### RELEASE:AFTER #####
-# fix gitlab links to be http instead of https to be Omnixell webserver compatible
-sed -i "s/https:\/\/gitlab\.omnixell\.com/http:\/\/gitlab\.omnixell\.com/g" CHANGELOG.md
-
 # store latest git tag and message and remove automatically created git tag
 COMMIT_TAG="$(git describe --abbrev=0 --tags)"
 COMMIT_MESSAGE="$(echo `git log -1 --pretty=%B`)" 
