@@ -11,11 +11,11 @@
     "start": "node dist/src/server.js",
     "demon": "gulp demon",
     "watch": "gulp watch",
-    "build:prod": "gulp build",
+    "build": "gulp build",
     "build:dev": "gulp build-dev",
     "test": "gulp test",
     "release": "scripts/release.sh",
-    "clean:dist": "gulp clean",
+    "clean": "gulp clean",
     "clean:node": "gulp clean-node",
     "clean:purge": "git clean -fdx"
   },
