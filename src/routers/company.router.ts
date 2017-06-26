@@ -53,7 +53,7 @@ export class CompanyRouter {
         _id: 1,
         name: 1,
     });
-    res.status(200).send({ 'response' : foundCompanies });
+    res.status(200).send(foundCompanies);
   }
 
   /**
@@ -109,7 +109,7 @@ export class CompanyRouter {
       if (!updatedCompany) {
         throw new Error(`No existing item found with supplied id '${queryId}'.`);
       }
-      res.status(201).send({ 'response' : updatedCompany }); // 201 CREATED
+      res.status(201).send(updatedCompany); // 201 CREATED
     }
     catch (error) {
       res.status(406).send({ 'error': error.message }); // 406 NOT ACCEPTABLE
@@ -138,7 +138,7 @@ export class CompanyRouter {
       if (!updatedCompany) {
         throw new Error(`No existing item found with supplied id '${queryId}'.`);
       }
-      res.status(201).send({ 'response' : updatedCompany }); // 201 CREATED
+      res.status(201).send(updatedCompany); // 201 CREATED
     }
     catch (error) {
       res.status(406).send({ 'error': error.message }); // 406 NOT ACCEPTABLE
@@ -158,7 +158,7 @@ export class CompanyRouter {
       if (!deletedCompany) {
         throw new Error(`No existing item found with supplied id '${queryId}'.`);
       }
-      res.status(200).send({ 'response' : deletedCompany }); // 200 SUCCESS
+      res.status(200).send(deletedCompany ); // 200 SUCCESS
     }
     catch (error) {
       res.status(404).send({ 'error': error.message }); // 404 NOT FOUND
@@ -194,7 +194,7 @@ export class CompanyRouter {
       newCompany.benef_owners = req.body['benef_owners'] ? req.body['benef_owners'] : undefined;
 
       let createdCompany: ICompanyModel = await MONGO_COMPANY.create(newCompany);
-      res.status(201).send({ 'response' : createdCompany }); // 201 CREATED
+      res.status(201).send(createdCompany); // 201 CREATED
     }
     catch (error) {
       res.status(406).send({ 'error': error.message }); // 406 NOT ACCEPTABLE
