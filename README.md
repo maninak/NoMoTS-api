@@ -9,6 +9,7 @@
     - [Develop](#develop)
     - [NPM Scripts](#npm-scripts)
     - [Environment](#environment)
+    - [Demo API specification](#demo-api-specification)
     - [Contributing](#contributing)
         - [Commit Guidelines](#commit-guidelines)
         - [Git Flow](#git-flow)
@@ -110,6 +111,169 @@ Upon launch, NoMoTS API looks for the file `.env` inside the `env/` folder from 
 Contrary to the template files, the `env/.env` file (if you create one) is *NOT* version-controlled.
 
  **NOTE:** *Never* store private secrets such as API keys, tokens, passwords etc in the `*.template.env` files! Always store such data in gitignored files for security concerns!
+
+ ## Demo API specification
+
+### Headers
+
+ For every request wherein API callers supply data in the body you will need to send the data in a valid json format and to have set in your header the following:
+
+| Key          | Value            |
+|--------------|------------------|
+| Content-Type | application/json |
+
+### `/companies` 
+
+#### Actions
+
+| METHOD | DESCRIPTION                             |
+|--------|-----------------------------------------|
+| GET    | Retrieve all existing Company documents |
+
+#### GET request parameters
+
+| PROPERTY     | TYPE     | REQUIRED | LOCATION       |
+|--------------|----------|----------|----------------|
+| -            | -        | -        | -              |
+
+Example cURL request:
+
+```sh
+curl  --request GET \
+      --url http://localhost:8080/companies
+```
+
+### `/companies/:id`
+
+#### Actions
+
+| METHOD | DESCRIPTION                                              |
+|--------|----------------------------------------------------------|
+| GET    | Retrieve a single existing Company document              |
+| PUT    | Overwrite an existing Company document                   |
+| PATCH  | Update the beneficiaries of an existing Company document |
+| DELETE | Delete an existing Company document                      |
+
+#### GET request parameters
+
+| PROPERTY     | TYPE     | REQUIRED | LOCATION       |
+|--------------|----------|----------|----------------|
+| id           | string   | true     | URL parameters |
+
+Example cURL request:
+
+```sh
+curl  --request GET \
+      --url http://localhost:8080/companies/594fd05c485492725edd8d20 \
+      --header 'content-type: application/json'
+```
+
+#### PUT request parameters
+
+| PROPERTY     | TYPE     | REQUIRED | LOCATION       |
+|--------------|----------|----------|----------------|
+| id           | string   | true     | URL parameters |
+| name         | string   | true     | body           |
+| address      | string   | true     | body           |
+| city         | string   | true     | body           |
+| country      | string   | false    | body           |
+| email        | string   | false    | body           |
+| phone        | string   | false    | body           |
+| benef_owners | [string] | false    | body           |
+
+Example cURL request:
+
+```sh
+curl  --request PUT \
+      --url http://localhost:8080/companies/594fd05c485492725edd8d20 \
+      --header 'content-type: application/json' \
+      --data '{
+          "name": "New Company LTD",
+          "address": "Markonian 88",
+          "city": "Milan",
+          "country": "Italy",
+          "email": "info@newcompany.com",
+          "phone": "+55 123 45 67 890",
+          "benef_owners": [
+              "Mitsos",
+              "Dick"
+          ]
+      }'
+```
+
+#### PATCH request parameters
+
+| PROPERTY     | TYPE     | REQUIRED | LOCATION       |
+|--------------|----------|----------|----------------|
+| id           | string   | true     | URL parameters |
+| benef_owners | [string] | true     | body           |
+
+Example cURL request:
+
+```sh
+curl  --request PATCH \
+      --url http://localhost:8080/companies/594fd05c485492725edd8d20 \
+      --header 'content-type: application/json' \
+      --data '{
+          "benef_owners": [
+              "Mitsos",
+              "Dick"
+          ]
+      }'
+```
+
+#### DELETE request parameters
+
+| PROPERTY     | TYPE     | REQUIRED | LOCATION       |
+|--------------|----------|----------|----------------|
+| id           | string   | true     | URL parameters |
+
+Example cURL request:
+
+```sh
+curl  --request DELETE \
+      --url http://localhost:8080/companies/594fd05c485492725edd8d20
+```
+
+### `/companies/create`
+
+#### Actions
+
+| METHOD       | DESCRIPTION                          |
+|--------------|--------------------------------------|
+| POST         | Create a new Company document        |
+
+#### POST request parameters
+
+| PROPERTY     | TYPE     | REQUIRED | LOCATION       |
+|--------------|----------|----------|----------------|
+| name         | string   | true     | body           |
+| address      | string   | true     | body           |
+| city         | string   | true     | body           |
+| country      | string   | false    | body           |
+| email        | string   | false    | body           |
+| phone        | string   | false    | body           |
+| benef_owners | [string] | false    | body           |
+
+Example cURL request:
+
+```sh
+curl  --request POST \
+      --url http://localhost:8080/companies/create \
+      --header 'content-type: application/json' \
+      --data '{
+          "name": "New Company LTD",
+          "address": "Markonian 88",
+          "city": "Milan",
+          "country": "Italy",
+          "email": "info@newcompany.com",
+          "phone": "+55 123 45 67 890",
+          "benef_owners": [
+              "Mitsos",
+              "Dick"
+          ]
+      }'
+```
 
 ## Contributing
 
