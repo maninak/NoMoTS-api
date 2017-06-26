@@ -31,7 +31,6 @@ gulp.task('build', ['clean', 'copy'], () => {
     .pipe(tsconfig())
   return tsResult.js
     .pipe(gulp.dest('dist'))
-    .pipe(shell([ 'cp env/prod.template.env env/.env' ]));
 });
 
 gulp.task('build-dev', ['clean', 'copy'], () => {
@@ -45,7 +44,6 @@ gulp.task('build-dev', ['clean', 'copy'], () => {
     }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'))
-    .pipe(shell([ 'cp env/dev.template.env env/.env' ]));
 });
 
 gulp.task('test', ['build'], () => {
