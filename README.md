@@ -122,7 +122,8 @@ Contrary to the template files, the `env/.env` file (if you create one) is *NOT*
 |--------------|------------------|
 | Content-Type | application/json |
 
-### `/companies` 
+<br><br> 
+### **`/companies`** 
 
 #### Actions
 
@@ -143,7 +144,8 @@ curl  --request GET \
       --url http://localhost:8080/companies
 ```
 
-### `/companies/:id`
+<br><br> 
+### **`/companies/:id`**
 
 #### Actions
 
@@ -153,6 +155,8 @@ curl  --request GET \
 | PUT    | Overwrite an existing Company document                   |
 | PATCH  | Update the beneficiaries of an existing Company document |
 | DELETE | Delete an existing Company document                      |
+
+<br>
 
 #### GET request parameters
 
@@ -168,6 +172,8 @@ curl  --request GET \
       --header 'content-type: application/json'
 ```
 
+<br>
+ 
 #### PUT request parameters
 
 | PROPERTY     | TYPE     | REQUIRED | LOCATION       |
@@ -201,6 +207,8 @@ curl  --request PUT \
       }'
 ```
 
+<br>
+ 
 #### PATCH request parameters
 
 | PROPERTY     | TYPE     | REQUIRED | LOCATION       |
@@ -222,6 +230,8 @@ curl  --request PATCH \
       }'
 ```
 
+<br>
+ 
 #### DELETE request parameters
 
 | PROPERTY     | TYPE     | REQUIRED | LOCATION       |
@@ -235,7 +245,8 @@ curl  --request DELETE \
       --url http://localhost:8080/companies/594fd05c485492725edd8d20
 ```
 
-### `/companies/create`
+<br><br>
+### **`/companies/create`**
 
 #### Actions
 
@@ -243,6 +254,8 @@ curl  --request DELETE \
 |--------------|--------------------------------------|
 | POST         | Create a new Company document        |
 
+<br>
+ 
 #### POST request parameters
 
 | PROPERTY     | TYPE     | REQUIRED | LOCATION       |
