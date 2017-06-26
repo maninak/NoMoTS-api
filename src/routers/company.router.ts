@@ -103,7 +103,7 @@ export class CompanyRouter {
         country       : req.body['country'].trim(),
         email         : req.body['email'] ? req.body['email'].trim() : undefined,
         phone         : req.body['phone'] ? req.body['phone'].trim() : undefined,
-        benef_owners  : req.body['benef_owners'] ? req.body['benef_owners'] : undefined,
+        benef_owners  : req.body['benef_owners'] ? req.body['benef_owners'] : [],
       }}, { new: true });
 
       if (!updatedCompany) {
