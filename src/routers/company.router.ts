@@ -131,9 +131,12 @@ export class CompanyRouter {
         throw new Error(`Supplied Company id '${queryId}' is not a valid MongoDB identifier.`);
       }
 
-      let updatedCompany: ICompanyModel = await MONGO_COMPANY.findByIdAndUpdate(queryId, { $set: {
-        benef_owners  : req.body['benef_owners'] ? req.body['benef_owners'] : req.body.benef_owners,
-      }}, { new: true });
+      let updatedCompany: ICompanyModel = await MONGO_COMPANY.findByIdAndUpdate(queryId,
+        { $set:
+          { benef_owners  : req.body['benef_owners'] ? req.body['benef_owners'] : req.body.benef_owners,
+        }},
+        { new: true },
+      );
 
       if (!updatedCompany) {
         throw new Error(`No existing item found with supplied id '${queryId}'.`);
