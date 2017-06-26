@@ -45,7 +45,7 @@ In order to launch NoMoTS API for production or development the following softwa
 
 To deploy in production copy and paste the following single command in your Unix terminal:
 
-`git clone git@github.com:maninak/NoMoTS-api.git && cd NoMoTS-api && npm i --only=production && npm build && npm start`
+`git clone https://github.com/maninak/NoMoTS-api.git && cd NoMoTS-api && npm i --only=production && npm build && npm start`
 
 This will:
 1. clone the source code
@@ -60,7 +60,7 @@ You can get set-up for development and extend the boilerplate by copy-pasting th
 
 #### Terminal 1:
 
-`git clone git@github.com:maninak/NoMoTS-api.git && cd NoMoTS-api && npm i && npm run watch`
+`git clone https://github.com/maninak/NoMoTS-api.git && cd NoMoTS-api && npm i && npm run watch`
 
 This will:
 1. clone the source code
