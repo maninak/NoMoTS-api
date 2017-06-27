@@ -95,7 +95,7 @@ Here is a brief description of what each does:
 * **`localmongo`** see section [Terminal 2](#terminal-2)
 * **`start`** launches the API web server (must have been built first)
 * **`demon`** see section [Terminal 3](#terminal-3)
-* **`watch`** see (6) in section [Terminal 1](#terminal-1)
+* **`watch`** see section [Terminal 1](#terminal-1)
 * **`build`** builds a production version of the app from source into `dist` folder.
 * **`build:dev`** builds a development version of the app from source into `dist` folder, including inline javascript source maps.
 * **`test`** runs all test present in the `test` folder
