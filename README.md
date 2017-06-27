@@ -60,7 +60,7 @@ You can get set-up for development and extend the boilerplate by copy-pasting th
 
 #### Terminal 1:
 
-`git clone git@github.com:maninak/NoMoTS-api.git && cd NoMoTS-api && npm i && npm run watch`
+`git clone https://github.com/maninak/NoMoTS-api.git && cd NoMoTS-api && npm i && cp env/dev.template.env env/.env && npm run watch`
 
 This will:
 1. clone the source code
@@ -96,8 +96,8 @@ Here is a brief description of what each does:
 * **`start`** launches the API web server (must have been built first)
 * **`demon`** see section [Terminal 3](#terminal-3)
 * **`watch`** see (6) in section [Terminal 1](#terminal-1)
-* **`build`** builds a production version of the app from source into `dist` folder. Also sets productions environment variables using the template `prod.template.env` found in the `env` folder.
-* **`build:dev`** builds a development version of the app from source into `dist` folder, including javascript source maps. Also sets development environment variables using the template `dev.template.env` found in the `env` folder.
+* **`build`** builds a production version of the app from source into `dist` folder.
+* **`build:dev`** builds a development version of the app from source into `dist` folder, including inline javascript source maps.
 * **`test`** runs all test present in the `test` folder
 * **`release`** see section [Release Versioning](#release-versioning)
 * **`clean`** deletes `dist` folder
