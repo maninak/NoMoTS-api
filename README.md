@@ -45,7 +45,7 @@ In order to launch NoMoTS API for production or development the following softwa
 
 To deploy in production copy and paste the following single command in your Unix terminal:
 
-`git clone git@github.com:maninak/NoMoTS-api.git && cd NoMoTS-api && npm i --only=production && npm build && npm start`
+`git clone https://github.com/maninak/NoMoTS-api.git && cd NoMoTS-api && npm i --only=production && npm build && npm start`
 
 This will:
 1. clone the source code
@@ -60,7 +60,7 @@ You can get set-up for development and extend the boilerplate by copy-pasting th
 
 #### Terminal 1:
 
-`git clone git@github.com:maninak/NoMoTS-api.git && cd NoMoTS-api && npm i && npm run watch`
+`git clone https://github.com/maninak/NoMoTS-api.git && cd NoMoTS-api && npm i && cp env/dev.template.env env/.env && npm run watch`
 
 This will:
 1. clone the source code
@@ -95,9 +95,9 @@ Here is a brief description of what each does:
 * **`localmongo`** see section [Terminal 2](#terminal-2)
 * **`start`** launches the API web server (must have been built first)
 * **`demon`** see section [Terminal 3](#terminal-3)
-* **`watch`** see (6) in section [Terminal 1](#terminal-1)
-* **`build`** builds a production version of the app from source into `dist` folder. Also sets productions environment variables using the template `prod.template.env` found in the `env` folder.
-* **`build:dev`** builds a development version of the app from source into `dist` folder, including javascript source maps. Also sets development environment variables using the template `dev.template.env` found in the `env` folder.
+* **`watch`** see section [Terminal 1](#terminal-1)
+* **`build`** builds a production version of the app from source into `dist` folder.
+* **`build:dev`** builds a development version of the app from source into `dist` folder, including inline javascript source maps.
 * **`test`** runs all test present in the `test` folder
 * **`release`** see section [Release Versioning](#release-versioning)
 * **`clean`** deletes `dist` folder
@@ -141,7 +141,7 @@ Example cURL request:
 
 ```sh
 curl  --request GET \
-      --url http://localhost:8080/companies
+      --url https://nomots.herokuapp.com/api/companies
 ```
 
 <br><br> 
@@ -168,7 +168,7 @@ Example cURL request:
 
 ```sh
 curl  --request GET \
-      --url http://localhost:8080/companies/594fd05c485492725edd8d20 \
+      --url https://nomots.herokuapp.com/api/companies/594fd05c485492725edd8d20 \
       --header 'content-type: application/json'
 ```
 
@@ -191,7 +191,7 @@ Example cURL request:
 
 ```sh
 curl  --request PUT \
-      --url http://localhost:8080/companies/594fd05c485492725edd8d20 \
+      --url https://nomots.herokuapp.com/api/companies/594fd05c485492725edd8d20 \
       --header 'content-type: application/json' \
       --data '{
           "name": "New Company LTD",
@@ -220,7 +220,7 @@ Example cURL request:
 
 ```sh
 curl  --request PATCH \
-      --url http://localhost:8080/companies/594fd05c485492725edd8d20 \
+      --url https://nomots.herokuapp.com/api/companies/594fd05c485492725edd8d20 \
       --header 'content-type: application/json' \
       --data '{
           "benef_owners": [
@@ -242,7 +242,7 @@ Example cURL request:
 
 ```sh
 curl  --request DELETE \
-      --url http://localhost:8080/companies/594fd05c485492725edd8d20
+      --url https://nomots.herokuapp.com/api/companies/594fd05c485492725edd8d20
 ```
 
 <br><br>
@@ -272,7 +272,7 @@ Example cURL request:
 
 ```sh
 curl  --request POST \
-      --url http://localhost:8080/companies/create \
+      --url https://nomots.herokuapp.com/api/companies/create \
       --header 'content-type: application/json' \
       --data '{
           "name": "New Company LTD",
