@@ -12,7 +12,7 @@ if (fs.existsSync('env/.env')) {
 
 const MONGO_URL: string       = process.env.MONGO_URL   || 'localhost';
 const MONGO_PORT: number      = process.env.MONGO_PORT  || 37017;
-const MONGO_DB: string        = process.env.DB          || 'dev';
+const MONGO_DB: string        = process.env.MONGO_DB    || 'dev';
 const MONGO_LINK: string      = `mongodb://${MONGO_URL}:${MONGO_PORT}/${MONGO_DB}`;
 
 // Connect to mongoDB
