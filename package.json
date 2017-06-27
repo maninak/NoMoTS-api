@@ -1,5 +1,5 @@
 {
-  "name": "NoMoTS",
+  "name": "nomots",
   "description": "A Node.js API boilerplate connected to MongoDB and implemented in Typescript. ",
   "version": "0.1.0",
   "author": "maninak",

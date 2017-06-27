@@ -22,12 +22,12 @@ if (fs.existsSync('env/.env')) {
       + 'Using fallback development configuration instead.');
 }
 
-// create http server
-const HTTP_PORT: number|string|boolean = normalizePort(process.env.PORT || 9080);
+// create api http server
+const HTTP_PORT: number|string|boolean = normalizePort(process.env.PORT || process.env.HTTP_PORT || 9080);
 const httpServer: http.Server = http.createServer(API.bootstrap().set('port', HTTP_PORT));
-httpServer.listen(HTTP_PORT);
-httpServer.on('error', onError);
-httpServer.on('listening', onListening);
+httpServer.listen(HTTP_PORT)
+          .on('error', onError)
+          .on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or boolean.

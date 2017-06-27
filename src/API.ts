@@ -23,6 +23,7 @@ export class API {
     this.express = express();
     this.config();
     this.bindRouters();
+    this.bindFrontend();
   }
 
   /**
@@ -66,6 +67,12 @@ export class API {
    */
   private bindRouters(): void {
     // bind additional routers here
-    this.express.use('/companies', CompanyRouter.bootstrap());
+    this.express.use('/api/companies', CompanyRouter.bootstrap());
+  }
+
+  private bindFrontend(): void {
+    this.express.get('/', (req: Request, res: Response) => {
+      res.sendFile(__dirname + '/assets/www/index.html');
+    });
   }
 }
