@@ -141,7 +141,7 @@ Example cURL request:
 
 ```sh
 curl  --request GET \
-      --url http://localhost:8080/companies
+      --url https://nomots.herokuapp.com/api/companies
 ```
 
 <br><br> 
@@ -168,7 +168,7 @@ Example cURL request:
 
 ```sh
 curl  --request GET \
-      --url http://localhost:8080/companies/594fd05c485492725edd8d20 \
+      --url https://nomots.herokuapp.com/api/companies/594fd05c485492725edd8d20 \
       --header 'content-type: application/json'
 ```
 
@@ -191,7 +191,7 @@ Example cURL request:
 
 ```sh
 curl  --request PUT \
-      --url http://localhost:8080/companies/594fd05c485492725edd8d20 \
+      --url https://nomots.herokuapp.com/api/companies/594fd05c485492725edd8d20 \
       --header 'content-type: application/json' \
       --data '{
           "name": "New Company LTD",
@@ -220,7 +220,7 @@ Example cURL request:
 
 ```sh
 curl  --request PATCH \
-      --url http://localhost:8080/companies/594fd05c485492725edd8d20 \
+      --url https://nomots.herokuapp.com/api/companies/594fd05c485492725edd8d20 \
       --header 'content-type: application/json' \
       --data '{
           "benef_owners": [
@@ -242,7 +242,7 @@ Example cURL request:
 
 ```sh
 curl  --request DELETE \
-      --url http://localhost:8080/companies/594fd05c485492725edd8d20
+      --url https://nomots.herokuapp.com/api/companies/594fd05c485492725edd8d20
 ```
 
 <br><br>
@@ -272,7 +272,7 @@ Example cURL request:
 
 ```sh
 curl  --request POST \
-      --url http://localhost:8080/companies/create \
+      --url https://nomots.herokuapp.com/api/companies/create \
       --header 'content-type: application/json' \
       --data '{
           "name": "New Company LTD",
