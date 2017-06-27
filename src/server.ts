@@ -23,7 +23,7 @@ if (fs.existsSync('env/.env')) {
 }
 
 // create http server
-const HTTP_PORT: number|string|boolean = normalizePort(process.env.HTTP_PORT || 9080);
+const HTTP_PORT: number|string|boolean = normalizePort(process.env.PORT || process.env.HTTP_PORT || 9080);
 const httpServer: http.Server = http.createServer(API.bootstrap().set('port', HTTP_PORT));
 httpServer.listen(HTTP_PORT);
 httpServer.on('error', onError);
