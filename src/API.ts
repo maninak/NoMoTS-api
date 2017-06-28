@@ -71,8 +71,12 @@ export class API {
   }
 
   private bindFrontend(): void {
-    this.express.get('/', (req: Request, res: Response) => {
-      res.sendFile(__dirname + '/assets/www/index.html');
-    });
+    const oneMinute: number = 60000; // 60000 == 1 minute
+
+    this.express
+      .use(express.static(__dirname + '/assets/www', { maxAge: oneMinute * 10 })) // Client-side file caching
+      .get('/', (req: Request, res: Response) => {
+        res.sendFile(__dirname + '/assets/www/index.html');
+      });
   }
 }

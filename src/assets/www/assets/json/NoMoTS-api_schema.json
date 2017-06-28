@@ -1,0 +1,137 @@
+{
+  "/companies": {
+    "get": {
+      "description": "Retrieve all existing Company documents",
+      "properties": {}
+    }
+  },
+  "/companies/:id": {
+    "get": {
+      "description": "Retrieve a single existing Company document",
+      "properties": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "location": "url parameters"
+        }
+      }
+    },
+    "put": {
+      "description": "Overwrite an existing Company document",
+      "properties": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "location": "url parameters"
+        },
+        "name": {
+          "type": "string",
+          "required": true,
+          "location": "body"
+        },
+        "address": {
+          "type": "string",
+          "required": true,
+          "location": "body"
+        },
+        "city": {
+          "type": "string",
+          "required": true,
+          "location": "body"
+        },
+        "country": {
+          "type": "string",
+          "required": true,
+          "location": "body"
+        },
+        "email": {
+          "type": "string",
+          "required": false,
+          "location": "body"
+        },
+        "phone": {
+          "type": "string",
+          "required": false,
+          "location": "body"
+        },
+        "benef_owners": {
+          "type": "[string]",
+          "required": false,
+          "location": "body"
+        }
+      }
+    },
+    "patch": {
+      "description": "Update the beneficiaries of an existing Company document",
+      "properties": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "location": "url parameters"
+        },
+        "benef_owners": {
+          "type": "[string]",
+          "required": true,
+          "location": "body"
+        }
+      }
+    },
+    "delete": {
+      "description": "Delete an existing Company document",
+      "properties": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "location": "url parameters"
+        }
+      }
+    }
+  },
+  "/companies/create": {
+    "post": {
+      "description": "Create a new Company document",
+      "properties": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "location": "url parameters"
+        },
+        "name": {
+          "type": "string",
+          "required": true,
+          "location": "body"
+        },
+        "address": {
+          "type": "string",
+          "required": true,
+          "location": "body"
+        },
+        "city": {
+          "type": "string",
+          "required": true,
+          "location": "body"
+        },
+        "country": {
+          "type": "string",
+          "required": true,
+          "location": "body"
+        },
+        "email": {
+          "type": "string",
+          "required": false,
+          "location": "body"
+        },
+        "phone": {
+          "type": "string",
+          "required": false,
+          "location": "body"
+        },
+        "benef_owners": {
+          "type": "[string]",
+          "required": false,
+          "location": "body"
+        }
+      }
+    }
+  }
+}
