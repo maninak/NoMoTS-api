@@ -182,7 +182,7 @@ curl  --request GET \
 | name         | string   | true     | body           |
 | address      | string   | true     | body           |
 | city         | string   | true     | body           |
-| country      | string   | false    | body           |
+| country      | string   | true     | body           |
 | email        | string   | false    | body           |
 | phone        | string   | false    | body           |
 | benef_owners | [string] | false    | body           |
@@ -263,7 +263,7 @@ curl  --request DELETE \
 | name         | string   | true     | body           |
 | address      | string   | true     | body           |
 | city         | string   | true     | body           |
-| country      | string   | false    | body           |
+| country      | string   | true     | body           |
 | email        | string   | false    | body           |
 | phone        | string   | false    | body           |
 | benef_owners | [string] | false    | body           |
