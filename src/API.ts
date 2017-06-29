@@ -67,14 +67,21 @@ export class API {
    */
   private bindRouters(): void {
     // bind additional routers here
-    this.express.use('/api/companies', CompanyRouter.bootstrap());
+    this.express
+      .use((req: Request, res: Response, next: NextFunction) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        next();
+      })
+      .use('/api/companies', CompanyRouter.bootstrap());
   }
 
   private bindFrontend(): void {
     const oneMinute: number = 60000; // 60000 == 1 minute
 
     this.express
-      .use(express.static(__dirname + '/assets/www', { maxAge: oneMinute * 10 })) // Client-side file caching
+      .use(express.static(__dirname + '/assets/www', { maxAge: oneMinute * 60 })) // Client-side file caching
       .get('/', (req: Request, res: Response) => {
         res.sendFile(__dirname + '/assets/www/index.html');
       });
