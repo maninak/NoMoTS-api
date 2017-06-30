@@ -66,6 +66,14 @@ export class API {
    */
   private bindRouters(): void {
     // bind additional routers here
-    this.express.use('/companies', CompanyRouter.bootstrap());
+    this.express
+      .use((req: Request, res: Response, next: NextFunction) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        next();
+      })
+      .use('/api/companies', CompanyRouter.bootstrap());
   }
+
 }
