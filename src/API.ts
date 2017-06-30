@@ -66,15 +66,24 @@ export class API {
    * @method bindRouters
    */
   private bindRouters(): void {
-    // bind additional routers here
     this.express
+      // configure CORS policy
       .use((req: Request, res: Response, next: NextFunction) => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE');
         res.header('Access-Control-Allow-Headers', 'Content-Type');
         next();
       })
+      // try redirect to using https
+      .all('*', (req: Request, res: Response, next: NextFunction) => {
+        if (req.headers['x-forwarded-proto'] !== 'https') {
+            res.redirect('https://' + req.headers['host'] + req.url);
+        } else {
+            next(); /* Continue to other routes if we're not redirecting */
+        }
+      })
       .use('/api/companies', CompanyRouter.bootstrap());
+      // bind additional routers here
   }
 
   private bindFrontend(): void {
