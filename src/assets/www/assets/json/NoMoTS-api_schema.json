@@ -91,11 +91,6 @@
     "post": {
       "description": "Create a new Company document",
       "properties": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "location": "url parameters"
-        },
         "name": {
           "type": "string",
           "required": true,
