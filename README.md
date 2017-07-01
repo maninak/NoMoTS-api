@@ -26,11 +26,11 @@
 
 ## Description
 
-**NoMoTS is a Node.js API [boilerplate](https://en.wikipedia.org/wiki/Boilerplate_code), connected to MongoDB using Mongoose and implemented in Typescript.**
+**NoMoTS is a Node.js API [boilerplate](https://en.wikipedia.org/wiki/Boilerplate_code), connected to MongoDB with Mongoose and implemented in Typescript.**
 
-NoMoTS provides the rich custom tooling needed for node + Typescript development from the get-go. It features dead-easy support for `development`, `production` and `test` environments and an automatic versioning system following the [SemVer](http://semver.org/) specification. Moreover it includes an example CRUD implementation of a simple API for `Company` documents, paired with its integration and unit tests, among numerous other goodies.
+NoMoTS provides the rich custom tooling needed for node + Typescript development from the get-go. It features support for `development`, `production` and `test` environments and an automatic versioning system following the [SemVer](http://semver.org/) specification. Moreover it includes an example CRUD implementation of a simple demo API of `Company` documents, paired with its integration and unit tests, among numerous other goodies.
 
-All code is littered with comments to help you understand what's going on and show you the way forward. If you already have experience with express.js you should feel right at home, only with less doubts and fear of touching the code due to the confidence boost that typings can provide.
+All source code is littered with comments to help you understand what's going on and show you the way forward. If you already have experience with express.js you should feel right at home, only with less doubts and fear of touching the code due to the confidence boost that typings can provide.
 
 ### Technologies
 
